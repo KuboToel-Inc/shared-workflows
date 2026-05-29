@@ -48,3 +48,13 @@ jobs:
     steps:
       - name: Mensaje de aprobacion
         run: echo "El proyecto ${{ inputs.project }} validado"
+  
+  upload-artifact:
+    needs: message-success
+    runs-on: ubuntu-latest
+    steps:
+      - name: Subir build como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ inputs.project }}
+          path: ${{ github.workspace }}/${{ inputs.project }}/dist

@@ -1,0 +1,27 @@
+name: React Deploy
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar build del artefacto
+        uses: actions/download-artifact@v4
+        with:
+          name: build-${{ inputs.project }}
+          path: dist
+      
+      - name: Deploy a gh-pages en deployments-repo
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          external_repository: KuboToel-Inc/deployments-repo
+          publish_branch: gh-pages
