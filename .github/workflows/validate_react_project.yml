@@ -19,13 +19,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24.12.0
-          cache: 'pnpm'
 
       - name: Instalar pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v6
         with:
           version: 11.3.0
           run_install: false
+          cache: true
       
       - name: Validar instalación de pnpm
         run: pnpm --version
