@@ -1,0 +1,42 @@
+name: React Validation
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Instalar pnpm
+        run: npm install -g pnpm
+
+      - name: Instalar dependencias
+        run: |
+          pnpm install --frozen-lockfile
+        working-directory: ${{ github.workspace }}/${{ inputs.project }}
+
+      - name: Compilar proyecto
+        run: |
+          pnpm run build
+        working-directory: ${{ github.workspace }}/${{ inputs.project }}
+  
+  message-success:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mensaje de aprobacion
+        run: echo "El proyecto ${{ inputs.project }} validado"
