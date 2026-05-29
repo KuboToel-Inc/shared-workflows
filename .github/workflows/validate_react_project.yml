@@ -26,6 +26,8 @@ jobs:
           version: 11.3.0
           run_install: false
           cache: true
+          cache_dependency_path: ${{ github.workspace }}/${{ inputs.project }}/pnpm-lock.yaml
+          package_json_file: ${{ github.workspace }}/${{ inputs.project }}/package.json
       
       - name: Validar instalación de pnpm
         run: pnpm --version
