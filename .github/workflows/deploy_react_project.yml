@@ -6,6 +6,9 @@ on:
       project:
         required: true
         type: string
+    secrets:
+      PERSONAL_TOKEN:
+        required: true
 
 jobs:
   deploy:
